@@ -1,21 +1,30 @@
+//Creatin the improvised database to handle the informations we got
+const alldata = {};
 
-import { showAlert } from './js/app';
-import { validateForm } from "./js/app";
-import { geoNamesAPI } from "./js/app";
-import { ConsultApiWeather } from "./js/app";
-import { showWeather } from "./js/app";
-import { searchImage } from './js/app';
-import { showImagenes } from './js/app';
-import './styles/tailwind.min.scss'
+//Requiring express and other modules we need
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+//creating the server using express
+const app = express();
+
+app.use(cors());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
-export {
-    validateForm,
-    showAlert,
-    geoNamesAPI,
-    showWeather,
-    ConsultApiWeather,
-    searchImage,
-    showImagenes,  
-}
+//tell the server what folder to use
+app.use(express.static('dist'));
+
+//get request to rout and send index.html file inside dist
+app.get('/', function (req, res) {
+    res.sendFile('dist/index.html')
+});
+
+// designates what port the app will listen to for incoming requests
+app.listen(8080, function () {
+    console.log('Example app listening on port 8080!')
+});
 
